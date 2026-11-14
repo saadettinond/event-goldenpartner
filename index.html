@@ -84,38 +84,31 @@
   form.done>:not(.ok){display:none}
   form.done .ok{display:block}
   .p-body.done .p-pill,.p-body.done .p-h{display:none}
-  .ok-badge{position:relative;width:104px;height:104px;margin:0 auto 18px;animation:okPop .6s cubic-bezier(.2,1.4,.4,1) both}
-  .ok-badge::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#E9F7EF}
-  .ok-badge::after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid #1F9D55;opacity:0;animation:okHalo 1.1s ease-out .75s both}
-  .ok-ring{position:relative;z-index:1;width:100%;height:100%;display:block;fill:none;stroke-linecap:round;stroke-linejoin:round}
-  .ok-c{stroke:#1F9D55;stroke-width:4;stroke-dasharray:277;stroke-dashoffset:0;transform:rotate(-90deg);transform-origin:50% 50%;animation:okDraw .7s cubic-bezier(.65,0,.35,1) .15s both}
-  .ok-t{stroke:#1F9D55;stroke-width:6;stroke-dasharray:60;stroke-dashoffset:0;animation:okTick .4s cubic-bezier(.65,0,.35,1) .7s both}
-  .ok-burst{position:absolute;left:50%;top:50%;width:0;height:0;z-index:0}
-  .ok-burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:2px;opacity:0;background:var(--c,var(--red));
-    transform:rotate(var(--a)) translateY(0) scale(.3);animation:okBurst .9s cubic-bezier(.2,.7,.3,1) .72s both}
-  .ok-burst i:nth-child(3n){border-radius:50%;width:7px;height:7px}
-  .ok-burst i:nth-child(1){--a:0deg}.ok-burst i:nth-child(2){--a:30deg;--c:var(--navy)}.ok-burst i:nth-child(3){--a:60deg;--c:#E5A93B}
-  .ok-burst i:nth-child(4){--a:90deg}.ok-burst i:nth-child(5){--a:120deg;--c:var(--navy)}.ok-burst i:nth-child(6){--a:150deg;--c:#E5A93B}
-  .ok-burst i:nth-child(7){--a:180deg}.ok-burst i:nth-child(8){--a:210deg;--c:var(--navy)}.ok-burst i:nth-child(9){--a:240deg;--c:#E5A93B}
-  .ok-burst i:nth-child(10){--a:270deg}.ok-burst i:nth-child(11){--a:300deg;--c:var(--navy)}.ok-burst i:nth-child(12){--a:330deg;--c:#E5A93B}
-  .ok h3{margin:0 0 8px;font-size:27px;font-weight:700;line-height:1.15;color:var(--navy);animation:okUp .6s ease .85s both}
-  .ok-lead{margin:0 auto 20px;max-width:330px;color:var(--muted);font-size:15px;line-height:1.55;animation:okUp .6s ease .95s both}
+  .ok-badge{position:relative;width:92px;height:92px;margin:4px auto 20px;animation:okPulse .5s cubic-bezier(.3,1.4,.5,1) .42s both}
+  .ok-badge::before,.ok-badge::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(31,157,85,.16);opacity:0;animation:okRipple 1.3s cubic-bezier(.2,.7,.3,1) .62s both}
+  .ok-badge::after{animation-delay:.86s}
+  .ok-ring{position:relative;z-index:1;width:100%;height:100%;display:block;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+  .ok-c{fill:#1F9D55;stroke:#1F9D55;stroke-width:4;stroke-dasharray:277;stroke-dashoffset:0;transform:rotate(-90deg);transform-origin:50% 50%;
+    animation:okDraw .45s cubic-bezier(.65,0,.35,1) both,okFill .25s ease .4s both}
+  .ok-t{fill:none;stroke:#fff;stroke-width:6.5;stroke-dasharray:60;stroke-dashoffset:0;animation:okTick .35s cubic-bezier(.65,0,.35,1) .58s both}
+  .ok h3{margin:0 0 8px;font-size:27px;font-weight:700;line-height:1.15;color:var(--navy);animation:okUp .5s cubic-bezier(.2,.7,.3,1) .5s both}
+  .ok-lead{margin:0 auto 20px;max-width:330px;color:var(--muted);font-size:15px;line-height:1.55;animation:okUp .5s cubic-bezier(.2,.7,.3,1) .58s both}
   .ok-lead b{color:var(--ink);font-weight:600}
-  .ok-pass{position:relative;text-align:left;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 22px 44px -30px rgba(5,22,52,.45);animation:okUp .6s ease 1.05s both}
+  .ok-pass{position:relative;text-align:left;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 22px 44px -30px rgba(5,22,52,.45);animation:okUp .5s cubic-bezier(.2,.7,.3,1) .66s both}
   .ok-pass-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-radius:16px 16px 0 0;background:var(--navy);color:#fff}
   .ok-pass-h b{font-family:var(--H);font-weight:650;font-size:14.5px}
   .ok-pass-h span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.14)}
   .ok-pass dl{margin:0;padding:16px 18px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px 16px;font-size:14.5px}
   .ok-pass dt{color:var(--muted)} .ok-pass dd{margin:0;font-weight:600;color:var(--ink);text-align:right}
-  .ok-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;animation:okUp .6s ease 1.15s both}
+  .ok-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;animation:okUp .5s cubic-bezier(.2,.7,.3,1) .74s both}
   .ok-acts .btn{justify-content:center;padding:12px 12px;font-size:14px}
-  .ok-again{appearance:none;border:0;background:none;cursor:pointer;margin:14px auto 0;padding:6px;font:inherit;font-size:13.5px;color:var(--navy-m);text-decoration:underline;text-underline-offset:3px;animation:okUp .6s ease 1.25s both}
-  @keyframes okPop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+  .ok-again{appearance:none;border:0;background:none;cursor:pointer;margin:14px auto 0;padding:6px;font:inherit;font-size:13.5px;color:var(--navy-m);text-decoration:underline;text-underline-offset:3px;animation:okUp .5s cubic-bezier(.2,.7,.3,1) .82s both}
   @keyframes okDraw{from{stroke-dashoffset:277}to{stroke-dashoffset:0}}
+  @keyframes okFill{from{fill:rgba(31,157,85,0)}to{fill:#1F9D55}}
   @keyframes okTick{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
-  @keyframes okHalo{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.55);opacity:0}}
-  @keyframes okBurst{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(.3)}70%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-74px) scale(1)}}
-  @keyframes okUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes okPulse{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
+  @keyframes okRipple{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.85);opacity:0}}
+  @keyframes okUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   @media (min-width:1061px) and (max-height:820px){
     .p-logo{width:180px;margin-bottom:26px}
     .p-pill{margin-bottom:10px;padding:6px 12px;font-size:11px}
@@ -444,8 +437,7 @@
           <button class="cta" type="submit">Randevu talep et <span aria-hidden="true">→</span></button>
           <div class="ok" id="ok" aria-live="polite" tabindex="-1">
             <div class="ok-badge" aria-hidden="true">
-              <span class="ok-burst"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-              <svg class="ok-ring" viewBox="0 0 96 96"><circle class="ok-c" cx="48" cy="48" r="44"/><path class="ok-t" d="M31 49.5l11.5 11.5L66 37"/></svg>
+              <svg class="ok-ring" viewBox="0 0 96 96"><circle class="ok-c" cx="48" cy="48" r="44"/><path class="ok-t" d="M30 49l12 12L66 36.5"/></svg>
             </div>
             <h3>Talebiniz alındı</h3>
             <p class="ok-lead" id="ok-lead">Ekibimiz en kısa sürede sizi arayarak görüşme saatinizi netleştirecek.</p>
@@ -520,11 +512,18 @@ function goForm(){
 }
 /* Videolar: görünürken oynat, değilken durdur */
 (function(){const vids=[...document.querySelectorAll(".c-vid")];if(!vids.length)return;
-  const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(rm){vids.forEach(v=>{v.removeAttribute("autoplay");v.pause();});return;}
+  const vis=new Set(vids);
+  const play=v=>{const p=v.play();if(p&&p.catch)p.catch(()=>{});return p;};
   if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target;
-      if(en.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();}),{threshold:.15});
-    vids.forEach(v=>io.observe(v));}})();
+      if(en.isIntersecting){vis.add(v);play(v);}else{vis.delete(v);v.pause();}}),{threshold:.15});
+    vids.forEach(v=>{vis.delete(v);io.observe(v);});}
+  else vids.forEach(play);
+  /* iPhone düşük güç modu otomatik oynatmayı engeller: ilk dokunuşta videoları aç */
+  const unlock=()=>{let all=true;vids.forEach(v=>{if(v.dataset.ok)return;all=false;const p=v.play();
+      if(p&&p.then)p.then(()=>{v.dataset.ok=1;if(!vis.has(v))v.pause();}).catch(()=>{});else v.dataset.ok=1;});
+    if(all)["touchend","click","keydown"].forEach(t=>document.removeEventListener(t,unlock,true));};
+  vids.forEach(v=>v.addEventListener("playing",()=>{v.dataset.ok=1;},{once:true}));
+  ["touchend","click","keydown"].forEach(t=>document.addEventListener(t,unlock,{capture:true,passive:true}));})();
 document.addEventListener("click",e=>{if(!e.target.closest(".tile"))document.querySelectorAll(".tile.open").forEach(x=>x.classList.remove("open"));});
 /* Kart açıklamaları: masaüstünde hover, dokunmatikte dokununca */
 document.querySelectorAll(".tile").forEach(t=>{
