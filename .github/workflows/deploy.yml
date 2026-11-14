@@ -2,7 +2,7 @@ name: event.goldenpartner.com.tr dağıtımı
 
 on:
   push:
-    branches: [main]
+    branches: [main, deploy-test]
   workflow_dispatch:
 
 concurrency:
