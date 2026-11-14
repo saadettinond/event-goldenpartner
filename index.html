@@ -487,13 +487,15 @@ const cal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+en
   const out="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&allday=true&startdt=2026-12-04&enddt=2026-12-06&subject="+encodeURIComponent(T)+"&location="+encodeURIComponent(L)+"&body="+encodeURIComponent(D.replace("\n"," "));
   /* .ics yalnızca Apple cihazlarda: iPhone/Mac doğrudan "Takvime ekle" açar; Windows/Android'de dosya olarak iner, orada gösterme */
   const apple=/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
-  const items=apple?[["etkinlik.ics","Apple Takvim","iPhone · Mac",false],[cal,"Google Takvim","Gmail",true],[out,"Outlook","Hotmail · Office",true]]
+  /* iPhone/Mac: webcal:// dosya indirmeden doğrudan Takvim uygulamasını açar (Safari, Chrome fark etmez) */
+  const ics="webcal://"+location.host+location.pathname.replace(/[^/]*$/,"")+"etkinlik.ics";
+  const items=apple?[[ics,"Apple Takvim","iPhone · Mac",false],[cal,"Google Takvim","Gmail",true],[out,"Outlook","Hotmail · Office",true]]
                    :[[cal,"Google Takvim","Android · Gmail",true],[out,"Outlook","Hotmail · Office",true]];
   const m=document.createElement("div");m.className="calmenu";m.setAttribute("role","menu");
   m.innerHTML=items.map(([h,t,s,ext])=>`<a role="menuitem" href="${h}"${ext?' target="_blank" rel="noopener"':""}><span>${t}</span><small>${s}</small></a>`).join("");
   document.body.appendChild(m);let src=null;
   const close=()=>{m.classList.remove("on");src=null;};
-  document.querySelectorAll("[data-cal]").forEach(a=>{a.href=apple?"etkinlik.ics":cal;a.removeAttribute("target");
+  document.querySelectorAll("[data-cal]").forEach(a=>{a.href=apple?ics:cal;a.removeAttribute("target");
     a.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();if(src===a){close();return;}
       src=a;const r=a.getBoundingClientRect(),mw=Math.max(230,r.width);m.style.minWidth=mw+"px";
       const left=Math.min(Math.max(8,r.left),innerWidth-mw-8);
