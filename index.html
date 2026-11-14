@@ -122,17 +122,16 @@
     background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 
   .country{position:relative;isolation:isolate;background:#0b1f4a;color:#fff;border-radius:24px;overflow:hidden;box-shadow:0 40px 70px -46px rgba(5,22,52,.7)}
-  .country+.country{margin-top:22px}
   .c-hero{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(440px,34vw,520px);display:flex;flex-direction:column;justify-content:space-between;padding:20px 24px 24px}
   .c-hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
     background:linear-gradient(to top,rgba(6,18,44,.97) 0%,rgba(6,18,44,.92) 30%,rgba(6,18,44,.78) 52%,rgba(6,18,44,.42) 74%,rgba(6,18,44,.55) 100%)}
   .c-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;background:#0b1f4a}
-  .c-body{position:relative}
   .c-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
   .c-copy{max-width:640px}
   .c-copy h3{font-weight:700;font-size:clamp(24px,2.3vw,32px);line-height:1.12;color:#fff;margin:0 0 10px;text-shadow:0 2px 18px rgba(0,0,0,.55)}
   .c-copy p{margin:0;font-size:15.5px;line-height:1.55;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.6)}
-  .c-body{padding:18px 24px 20px;background:#0b1f4a;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center}
+  .c-cta{margin-top:20px}
+  .c-cta+.country{margin-top:44px}
 
   /* kompakt özellik kartları + üstte açılan açıklama */
   .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:20px}
@@ -249,8 +248,8 @@
     .tile:nth-child(even) .tip{left:auto;right:0} .tile:nth-child(even) .tip::after{left:auto;right:20px}
     .tip{width:min(270px,calc(200% + 8px))}
     .c-hero{min-height:560px;padding:16px 16px 18px}
-    .c-body{padding:14px 16px 20px}
-    .country .btn{width:100%;justify-content:center}
+    .c-cta .btn{width:100%;justify-content:center}
+    .c-cta+.country{margin-top:34px}
     .mapwrap{grid-template-columns:minmax(0,1fr);height:auto}
     .map-frame{height:300px;order:-1}
     .map-card{border-right:0;border-top:1px solid var(--line);padding:22px 18px}
@@ -294,10 +293,8 @@
               </div>
             </div>
           </div>
-          <div class="c-body">
-            <button class="btn red" data-pick="gr">Golden Visa İçin Randevu Al <span class="ar">→</span></button>
-          </div>
         </article>
+        <div class="c-cta rv"><button class="btn red" data-pick="gr">Golden Visa İçin Randevu Al <span class="ar">→</span></button></div>
 
         <article class="country rv">
           <div class="c-hero">
@@ -316,10 +313,8 @@
               </div>
             </div>
           </div>
-          <div class="c-body">
-            <button class="btn red" data-pick="uk">İngiltere Yatırımı İçin Randevu Al <span class="ar">→</span></button>
-          </div>
         </article>
+        <div class="c-cta rv"><button class="btn red" data-pick="uk">İngiltere Yatırımı İçin Randevu Al <span class="ar">→</span></button></div>
       </section>
 
       <section class="sec">
