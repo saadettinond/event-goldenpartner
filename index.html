@@ -79,15 +79,43 @@
   button.cta[disabled]{opacity:.7;cursor:progress}
   button.cta:hover{filter:brightness(1.07)}
   button.cta:active{transform:translateY(1px)}
-  .ok{display:none;text-align:center;padding:10px 0 4px}
-  .ok .tick{width:58px;height:58px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:#EAF5EC;color:#2F7A3E}
-  .ok .tick svg.i{width:28px;height:28px;stroke-width:2.4}
-  .ok h3{margin:0 0 6px;font-size:21px;font-weight:700;color:var(--navy)}
-  .ok p{margin:0 0 14px;color:var(--muted);font-size:14.5px}
-  .ok dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;text-align:left;background:var(--bg);border-radius:12px;padding:14px 16px;font-size:14px}
-  .ok dt{color:var(--muted)} .ok dd{margin:0;font-weight:500;color:var(--ink)}
+  /* ===== başarı ekranı ===== */
+  .ok{display:none;text-align:center;padding:4px 0 2px;outline:none}
   form.done>:not(.ok){display:none}
   form.done .ok{display:block}
+  .p-body.done .p-pill,.p-body.done .p-h{display:none}
+  .ok-badge{position:relative;width:104px;height:104px;margin:0 auto 18px;animation:okPop .6s cubic-bezier(.2,1.4,.4,1) both}
+  .ok-badge::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#E9F7EF}
+  .ok-badge::after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid #1F9D55;opacity:0;animation:okHalo 1.1s ease-out .75s both}
+  .ok-ring{position:relative;z-index:1;width:100%;height:100%;display:block;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .ok-c{stroke:#1F9D55;stroke-width:4;stroke-dasharray:277;stroke-dashoffset:0;transform:rotate(-90deg);transform-origin:50% 50%;animation:okDraw .7s cubic-bezier(.65,0,.35,1) .15s both}
+  .ok-t{stroke:#1F9D55;stroke-width:6;stroke-dasharray:60;stroke-dashoffset:0;animation:okTick .4s cubic-bezier(.65,0,.35,1) .7s both}
+  .ok-burst{position:absolute;left:50%;top:50%;width:0;height:0;z-index:0}
+  .ok-burst i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:2px;opacity:0;background:var(--c,var(--red));
+    transform:rotate(var(--a)) translateY(0) scale(.3);animation:okBurst .9s cubic-bezier(.2,.7,.3,1) .72s both}
+  .ok-burst i:nth-child(3n){border-radius:50%;width:7px;height:7px}
+  .ok-burst i:nth-child(1){--a:0deg}.ok-burst i:nth-child(2){--a:30deg;--c:var(--navy)}.ok-burst i:nth-child(3){--a:60deg;--c:#E5A93B}
+  .ok-burst i:nth-child(4){--a:90deg}.ok-burst i:nth-child(5){--a:120deg;--c:var(--navy)}.ok-burst i:nth-child(6){--a:150deg;--c:#E5A93B}
+  .ok-burst i:nth-child(7){--a:180deg}.ok-burst i:nth-child(8){--a:210deg;--c:var(--navy)}.ok-burst i:nth-child(9){--a:240deg;--c:#E5A93B}
+  .ok-burst i:nth-child(10){--a:270deg}.ok-burst i:nth-child(11){--a:300deg;--c:var(--navy)}.ok-burst i:nth-child(12){--a:330deg;--c:#E5A93B}
+  .ok h3{margin:0 0 8px;font-size:27px;font-weight:700;line-height:1.15;color:var(--navy);animation:okUp .6s ease .85s both}
+  .ok-lead{margin:0 auto 20px;max-width:330px;color:var(--muted);font-size:15px;line-height:1.55;animation:okUp .6s ease .95s both}
+  .ok-lead b{color:var(--ink);font-weight:600}
+  .ok-pass{position:relative;text-align:left;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:0 22px 44px -30px rgba(5,22,52,.45);animation:okUp .6s ease 1.05s both}
+  .ok-pass-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-radius:16px 16px 0 0;background:var(--navy);color:#fff}
+  .ok-pass-h b{font-family:var(--H);font-weight:650;font-size:14.5px}
+  .ok-pass-h span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.14)}
+  .ok-pass dl{margin:0;padding:16px 18px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px 16px;font-size:14.5px}
+  .ok-pass dt{color:var(--muted)} .ok-pass dd{margin:0;font-weight:600;color:var(--ink);text-align:right}
+  .ok-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;animation:okUp .6s ease 1.15s both}
+  .ok-acts .btn{justify-content:center;padding:12px 12px;font-size:14px}
+  .ok-again{appearance:none;border:0;background:none;cursor:pointer;margin:14px auto 0;padding:6px;font:inherit;font-size:13.5px;color:var(--navy-m);text-decoration:underline;text-underline-offset:3px;animation:okUp .6s ease 1.25s both}
+  @keyframes okPop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+  @keyframes okDraw{from{stroke-dashoffset:277}to{stroke-dashoffset:0}}
+  @keyframes okTick{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+  @keyframes okHalo{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.55);opacity:0}}
+  @keyframes okBurst{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(.3)}70%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateY(-74px) scale(1)}}
+  @keyframes okUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   @media (min-width:1061px) and (max-height:820px){
     .p-logo{width:180px;margin-bottom:26px}
     .p-pill{margin-bottom:10px;padding:6px 12px;font-size:11px}
@@ -414,11 +442,22 @@
           <input type="text" name="website" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <p class="f-err" id="f-err" role="alert"></p>
           <button class="cta" type="submit">Randevu talep et <span aria-hidden="true">→</span></button>
-          <div class="ok" id="ok" aria-live="polite">
-            <div class="tick"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <div class="ok" id="ok" aria-live="polite" tabindex="-1">
+            <div class="ok-badge" aria-hidden="true">
+              <span class="ok-burst"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <svg class="ok-ring" viewBox="0 0 96 96"><circle class="ok-c" cx="48" cy="48" r="44"/><path class="ok-t" d="M31 49.5l11.5 11.5L66 37"/></svg>
+            </div>
             <h3>Talebiniz alındı</h3>
-            <p>Ekibimiz sizi arayarak görüşme saatinizi netleştirecek.</p>
-            <dl id="ok-sum"></dl>
+            <p class="ok-lead" id="ok-lead">Ekibimiz en kısa sürede sizi arayarak görüşme saatinizi netleştirecek.</p>
+            <div class="ok-pass">
+              <div class="ok-pass-h"><b>Randevu talebiniz</b><span>Alındı</span></div>
+              <dl id="ok-sum"></dl>
+            </div>
+            <div class="ok-acts">
+              <a class="btn navy" target="_blank" rel="noopener" data-cal href="#">Takvime ekle</a>
+              <a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Moxy%20%C4%B0zmir%2C%20Turan%2C%201649.%20Sk.%20No%3A67%2C%2035540%20Bayrakl%C4%B1/%C4%B0zmir">Yol tarifi</a>
+            </div>
+            <button type="button" class="ok-again" id="ok-again">Başka biri için talep oluştur</button>
           </div>
         </form>
       </div>
@@ -519,8 +558,12 @@ $("#lead").addEventListener("submit",async e=>{
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok) throw new Error(j.error||"Gönderilemedi");
     const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-    $("#ok-sum").innerHTML=`<dt>Ad Soyad</dt><dd>${esc(data.name)}</dd><dt>Program</dt><dd>${esc(data.program)}</dd><dt>Gün</dt><dd>${esc(data.day||"Belirtilmedi")}</dd>`;
+    $("#ok-sum").innerHTML=`<dt>Ad Soyad</dt><dd>${esc(data.name)}</dd><dt>Telefon</dt><dd>${esc(data.cc+" "+data.phone)}</dd><dt>Program</dt><dd>${esc(data.program)}</dd>${data.day?`<dt>Gün</dt><dd>${esc(data.day)}</dd>`:""}`;
+    const first=data.name.split(/\s+/)[0];
+    $("#ok-lead").innerHTML=`Teşekkürler <b>${esc(first)}</b>, ekibimiz en kısa sürede sizi arayarak görüşme saatinizi netleştirecek.`;
+    form.classList.remove("done");void form.offsetWidth;
     form.classList.add("done");$("#p-body").classList.add("done");
+    setTimeout(()=>{try{$("#ok").focus({preventScroll:true});}catch(_){}} ,50);
     if(window.fbq){try{fbq("track","Lead",{content_name:data.program});}catch(_){}}
     if(!matchMedia("(min-width:1061px)").matches) document.getElementById("kayit").scrollIntoView({behavior:"smooth",block:"start"});
   }catch(ex){
@@ -529,6 +572,7 @@ $("#lead").addEventListener("submit",async e=>{
   }finally{btn.disabled=false;btn.innerHTML=old;}
 });
 ["#name","#phone"].forEach(s=>$(s).addEventListener("input",e=>e.target.classList.remove("err")));
+$("#ok-again").addEventListener("click",()=>{const f=$("#lead");f.reset();f.classList.remove("done");$("#p-body").classList.remove("done");$("#name").focus();});
 $("#c1").addEventListener("change",()=>$("#c1-box").classList.remove("err"));
 
 /* Mobil alt bar + kaydırınca beliren bölümler */
