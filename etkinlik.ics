@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Golden Partner//Izmir Etkinlik//TR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:izmir-ozel-yatirim-etkinligi-2026@event.goldenpartner.com.tr
+DTSTAMP:20261114T120000Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261206
+SUMMARY:Golden Partner · İzmir Özel Yatırım Etkinliği
+LOCATION:Moxy İzmir\, Turan\, 1649. Sk. No:67\, 35540 Bayraklı/İzmir
+DESCRIPTION:İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarl
+ a birebir görüşme.\nhttps://event.goldenpartner.com.tr
+URL:https://event.goldenpartner.com.tr
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+TRIGGER:-PT15H
+ACTION:DISPLAY
+DESCRIPTION:Yarın: Golden Partner İzmir etkinliği
+END:VALARM
+END:VEVENT
+END:VCALENDAR

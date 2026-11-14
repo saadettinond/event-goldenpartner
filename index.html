@@ -79,6 +79,13 @@
   button.cta[disabled]{opacity:.7;cursor:progress}
   button.cta:hover{filter:brightness(1.07)}
   button.cta:active{transform:translateY(1px)}
+  /* ===== takvim menüsü ===== */
+  .calmenu{position:fixed;z-index:60;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 24px 50px -20px rgba(5,22,52,.45);
+    opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .15s ease,transform .15s ease}
+  .calmenu.on{opacity:1;transform:none;pointer-events:auto}
+  .calmenu a{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:600;font-family:var(--H)}
+  .calmenu a:hover,.calmenu a:focus-visible{background:var(--bg);outline:none}
+  .calmenu a small{margin-left:auto;font-family:inherit;font-weight:500;font-size:12px;color:var(--muted);white-space:nowrap}
   /* ===== başarı ekranı ===== */
   .ok{display:none;text-align:center;padding:4px 0 2px;outline:none}
   form.done>:not(.ok){display:none}
@@ -474,7 +481,28 @@ document.querySelectorAll("[data-noop]").forEach(a=>a.addEventListener("click",e
 /* Takvim */
 const cal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Golden Partner · İzmir Özel Yatırım Etkinliği")+
   "&dates=20261204/20261206&location="+encodeURIComponent("Moxy Hotel, Bayraklı, İzmir")+"&details="+encodeURIComponent("İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarla birebir görüşme.");
-document.querySelectorAll("[data-cal]").forEach(a=>a.href=cal);
+/* Takvime ekle: Apple (iPhone/Mac, .ics) · Google · Outlook */
+(function(){const T="Golden Partner · İzmir Özel Yatırım Etkinliği",L="Moxy İzmir, Turan, 1649. Sk. No:67, 35540 Bayraklı/İzmir",
+  D="İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarla birebir görüşme.\nhttps://event.goldenpartner.com.tr";
+  const out="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&allday=true&startdt=2026-12-04&enddt=2026-12-06&subject="+encodeURIComponent(T)+"&location="+encodeURIComponent(L)+"&body="+encodeURIComponent(D.replace("\n"," "));
+  const apple=/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+  const items=[["etkinlik.ics","Apple Takvim","iPhone · Mac",false],[cal,"Google Takvim","Android · Gmail",true],[out,"Outlook","Hotmail · Office",true]];
+  if(!apple) items.unshift(items.splice(1,1)[0]);
+  const m=document.createElement("div");m.className="calmenu";m.setAttribute("role","menu");
+  m.innerHTML=items.map(([h,t,s,ext])=>`<a role="menuitem" href="${h}"${ext?' target="_blank" rel="noopener"':""}><span>${t}</span><small>${s}</small></a>`).join("");
+  document.body.appendChild(m);let src=null;
+  const close=()=>{m.classList.remove("on");src=null;};
+  document.querySelectorAll("[data-cal]").forEach(a=>{a.href="etkinlik.ics";a.removeAttribute("target");
+    a.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();if(src===a){close();return;}
+      src=a;const r=a.getBoundingClientRect(),mw=Math.max(230,r.width);m.style.minWidth=mw+"px";
+      const left=Math.min(Math.max(8,r.left),innerWidth-mw-8);
+      const below=r.bottom+8+170<innerHeight;m.style.left=left+"px";
+      m.style.top=(below?r.bottom+8:Math.max(8,r.top-8-m.offsetHeight||170))+"px";m.classList.add("on");});});
+  m.addEventListener("click",()=>setTimeout(close,50));
+  document.addEventListener("click",e=>{if(!m.contains(e.target))close();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")close();});
+  addEventListener("scroll",close,{passive:true});document.querySelectorAll(".fcard").forEach(f=>f.addEventListener("scroll",close,{passive:true}));
+})();
 
 /* Geri sayım */
 (function(){const start=new Date(2026,11,4),end=new Date(2026,11,6),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());

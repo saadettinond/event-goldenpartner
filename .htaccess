@@ -21,3 +21,7 @@ AddType video/mp4 .mp4
     Header set Cache-Control "no-cache, must-revalidate"
   </IfModule>
 </FilesMatch>
+
+# Takvim dosyası (iPhone/Mac "Takvime ekle")
+AddType text/calendar .ics
+AddCharset UTF-8 .ics
