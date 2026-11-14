@@ -14,3 +14,10 @@ DirectoryIndex index.html
   ExpiresByType video/mp4  "access plus 30 days"
 </IfModule>
 AddType video/mp4 .mp4
+
+# Sayfa her açılışta güncel sürümü kontrol etsin (değişiklikler hemen görünsün)
+<FilesMatch "\.html$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, must-revalidate"
+  </IfModule>
+</FilesMatch>
