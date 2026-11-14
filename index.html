@@ -15,7 +15,7 @@
     --sw:clamp(380px,28vw,460px);
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{position:relative;margin:0;background:#fff;color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   h1,h2,h3,h4{font-family:var(--H);margin:0;letter-spacing:-.02em}
   a{color:inherit} img{display:block;max-width:100%}
@@ -209,9 +209,9 @@
   .map-card .btn{padding:11px 15px;font-size:13.5px}
   .sec-map{container-type:inline-size}
   @container (max-width:860px){
-    .mapwrap{display:flex;flex-direction:column;height:auto;overflow:visible;background:none;border:0;box-shadow:none;border-radius:0}
-    .map-frame{position:relative;inset:auto;height:340px;order:-1;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
-    .map-card{position:relative;right:auto;top:auto;transform:none;width:auto;margin:-58px 14px 0;padding:20px 18px}
+    .mapwrap{display:flex;flex-direction:column;height:auto;background:#fff}
+    .map-frame{position:relative;inset:auto;height:300px;order:-1}
+    .map-card{position:relative;right:auto;top:auto;transform:none;width:auto;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;padding:22px 18px}
   }
 
   .faq{border-top:1px solid #D9DFEA}
@@ -236,6 +236,7 @@
   /* ===== tablet / mobil ===== */
   @media (max-width:1060px){
     .bgfix{display:none}
+    .in{font-size:16px}
     .m-top{display:flex;order:0;align-items:center;justify-content:center;background:#fff;padding:14px 18px;border-bottom:1px solid var(--line)}
     .m-top img{width:168px;height:auto}
     .p-logo{display:none}
