@@ -120,8 +120,7 @@
   .cd[hidden]{display:none}
   .cd b{display:grid;place-items:center;min-width:52px;height:52px;padding:0 8px;border-radius:12px;background:var(--red);color:#fff;font-family:var(--H);font-weight:800;font-size:28px;line-height:1;letter-spacing:-.02em}
   .cd b.sm{font-size:15px}
-  .cd span{font-family:var(--H);font-weight:650;font-size:15.5px;line-height:1.2;color:var(--navy)}
-  .cd small{display:block;font-family:inherit;font-weight:500;font-size:12.5px;color:var(--muted);margin-top:3px;letter-spacing:0}
+  .cd span{font-family:var(--H);font-weight:700;font-size:17px;line-height:1.2;color:var(--navy)}
 
   .tag{display:inline-flex;align-items:center;gap:9px;padding:7px 13px 7px 8px;border-radius:999px;background:rgba(255,255,255,.95);white-space:nowrap;
     font-family:var(--H);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy)}
@@ -208,6 +207,12 @@
   .map-card .when svg.i{color:var(--navy)}
   .map-card .acts{display:flex;gap:8px;flex-wrap:wrap}
   .map-card .btn{padding:11px 15px;font-size:13.5px}
+  .sec-map{container-type:inline-size}
+  @container (max-width:860px){
+    .mapwrap{display:flex;flex-direction:column;height:auto;overflow:visible;background:none;border:0;box-shadow:none;border-radius:0}
+    .map-frame{position:relative;inset:auto;height:340px;order:-1;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+    .map-card{position:relative;right:auto;top:auto;transform:none;width:auto;margin:-58px 14px 0;padding:20px 18px}
+  }
 
   .faq{border-top:1px solid #D9DFEA}
   .faq details{border-bottom:1px solid #D9DFEA}
@@ -236,8 +241,9 @@
     .p-logo{display:none}
     .stage{display:flex;flex-direction:column}
     .left{display:contents}
-    .hero{order:1;height:auto;aspect-ratio:4/3;overflow:hidden}
-    .hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:0% 30%}
+    .hero{order:1;height:auto;aspect-ratio:1087/1080;overflow:hidden}
+    .hero picture{display:block;width:100%;height:100%}
+    .hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
     .side{order:2;position:static;width:auto;height:auto;display:block;pointer-events:auto}
     .content{order:3;border-radius:0;box-shadow:none;padding:0 18px 30px}
     .fcard{max-height:none;border-radius:0;box-shadow:none;padding:26px 18px 34px}
@@ -260,9 +266,6 @@
     .c-copy h3 br{display:none}
     .c-cta .btn{width:100%;justify-content:center}
     .c-cta+.country{margin-top:34px}
-    .mapwrap{display:flex;flex-direction:column;height:auto;overflow:visible;background:none;border:0;box-shadow:none;border-radius:0}
-    .map-frame{position:relative;inset:auto;height:320px;order:-1;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
-    .map-card{position:relative;right:auto;top:auto;transform:none;width:auto;margin:-58px 12px 0;padding:20px 18px}
     .sec-head{flex-direction:column;align-items:flex-start}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}}
@@ -280,7 +283,7 @@
   <div class="left">
     <figure class="hero">
       <h1 class="sr">İzmir Özel Yatırım Etkinliği — İngiltere ve Yunanistan yurt dışı gayrimenkul, 4–5 Aralık, Moxy Hotel Bayraklı, İzmir</h1>
-      <img src="img/bg.jpg" alt="İngiltere · Yunanistan yurt dışı gayrimenkul — İzmir Özel Yatırım Etkinliği. 4–5 Aralık, Moxy Hotel Bayraklı, İzmir. Uzmanlarla birebir görüşme.">
+      <picture><source media="(max-width:1060px)" srcset="img/hero-mobile.jpg" width="1087" height="1080"><img src="img/bg.jpg" alt="İngiltere · Yunanistan yurt dışı gayrimenkul — İzmir Özel Yatırım Etkinliği. 4–5 Aralık, Moxy Hotel Bayraklı, İzmir. Uzmanlarla birebir görüşme."></picture>
     </figure>
     <main class="content">
       <section class="sec" id="programlar">
@@ -339,7 +342,7 @@
         </div>
       </section>
 
-      <section class="sec">
+      <section class="sec sec-map">
         <div class="sec-head">
           <div><p class="eyebrow rv">Etkinlik yeri</p><h2 class="rv">Moxy Hotel, Bayraklı</h2></div>
           <div class="cd rv" id="cd" hidden><b id="cd-n"></b><span id="cd-l"></span></div>
@@ -451,9 +454,9 @@ document.querySelectorAll("[data-cal]").forEach(a=>a.href=cal);
   const t=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Istanbul",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("-").map(Number);
   const d=Math.round((Date.UTC(2026,11,4)-Date.UTC(t[0],t[1]-1,t[2]))/864e5);
   const n=document.getElementById("cd-n"),l=document.getElementById("cd-l");
-  if(d>=1){n.textContent=d;l.innerHTML="gün kaldı<small>4–5 Aralık · Cuma – Cumartesi</small>";}
-  else if(d===0){n.textContent="Bugün";n.className="sm";l.innerHTML="Etkinlik başlıyor<small>4–5 Aralık · Moxy Hotel</small>";}
-  else if(d===-1){n.textContent="Bugün";n.className="sm";l.innerHTML="Etkinliğin son günü<small>5 Aralık · Moxy Hotel</small>";}
+  if(d>=1){n.textContent=d;l.textContent="gün kaldı";}
+  else if(d===0){n.textContent="Bugün";n.className="sm";l.textContent="Etkinlik başlıyor";}
+  else if(d===-1){n.textContent="Bugün";n.className="sm";l.textContent="Etkinliğin son günü";}
   else return;
   el.hidden=false;})();
 /* Google Maps */
