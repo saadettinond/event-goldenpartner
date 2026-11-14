@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>İzmir Özel Yatırım Etkinliği · 4–5 Aralık · Golden Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A2350; --navy-m:#123A78; --red:#C8102E; --red-d:#9B0C1E;
+    --bg:#F3F4F7; --ink:#0B1630; --text:#2A3450; --muted:#6B7690; --line:#E2E7EF;
+    --H:"Manrope","Inter",system-ui,sans-serif;
+    --sw:clamp(380px,28vw,460px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{position:relative;margin:0;background:#fff;color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--H);margin:0;letter-spacing:-.02em}
+  a{color:inherit} img{display:block;max-width:100%}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+
+  /* ===== yerleşim ===== */
+  .bgfix{position:absolute;top:0;left:0;right:0;height:100vh;z-index:0;background:#0b1f4a;overflow:hidden}
+  /* görsel her zaman tam yükseklikte, hiç kırpılmadan; ekran daha genişse sağı aynalanarak devam eder */
+  .bgfix img{position:absolute;top:0;left:0;height:100vh;width:auto;max-width:none}
+  .bgfix img.mir{left:calc(100vh * 1.7741);transform:scaleX(-1)}
+  .bgfix::after{content:"";position:absolute;top:0;bottom:0;left:calc(100vh * 1.7741);right:0;background:linear-gradient(90deg,rgba(6,18,44,0),rgba(6,18,44,.22) 80px)}
+  .stage{position:relative;z-index:1}
+  .hero{margin:0;height:100vh}
+  .hero img{display:none}
+  .content{position:relative;z-index:1;background:var(--bg);
+    padding:6px calc(var(--sw) + clamp(20px,3vw,48px)) 36px clamp(20px,3vw,48px)}
+
+  /* ===== form: sağda sabit beyaz alan ===== */
+  .side{position:fixed;top:0;right:0;width:var(--sw);height:100vh;z-index:5;background:#fff;display:flex;align-items:center;justify-content:center}
+  .fcard{width:100%;max-width:420px;max-height:100vh;overflow-y:auto;scrollbar-width:none;padding:20px clamp(24px,2.6vw,44px)}
+  .fcard::-webkit-scrollbar{display:none}
+  .p-body{width:100%}
+  .p-logo{display:block;width:210px;height:auto;margin:0 0 44px}
+  .m-top{display:none}
+  .p-pill{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 13px;border-radius:999px;background:var(--red);color:#fff;font-family:var(--H);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .p-pill .live{width:6px;height:6px;border-radius:50%;background:#fff;animation:live 1.6s ease-in-out infinite}
+  @keyframes live{0%,100%{opacity:1}50%{opacity:.3}}
+  .p-h{font-weight:700;font-size:26px;line-height:1.15;color:var(--navy);margin:0 0 6px}
+  .p-sub{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.5}
+  .p-body.done .p-sub{display:none}
+  form{display:flex;flex-direction:column;gap:10px}
+  .in{width:100%;background:#fff;color:var(--ink);border:1.5px solid var(--line);border-radius:11px;padding:12px 14px;font:inherit;font-size:15px;transition:border-color .2s,box-shadow .2s}
+  .in::placeholder{color:#9AA3B6}
+  .in:focus{outline:none;border-color:var(--navy-m);box-shadow:0 0 0 3px rgba(18,58,120,.12)}
+  .in.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,16,46,.1)}
+  select.in{appearance:none;cursor:pointer;padding-right:30px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%230A2350' stroke-width='1.6' fill='none'/></svg>");
+    background-repeat:no-repeat;background-position:right 11px center}
+  .row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:9px}
+  fieldset.chips{border:0;padding:0;margin:4px 0 0;min-width:0}
+  fieldset.chips legend{padding:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:6px}
+  .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .opts label{position:relative;cursor:pointer}
+  .opts input{position:absolute;opacity:0;pointer-events:none}
+  .opts span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:44px;text-align:center;border:1.5px solid var(--line);border-radius:10px;
+    padding:6px 4px;font-weight:500;font-size:13px;color:var(--ink);line-height:1.15;transition:border-color .2s,background .2s,box-shadow .2s}
+  .opts span small{font-size:11px;color:var(--muted);margin-top:2px}
+  .opts label:hover span{border-color:#C9D2E2}
+  .opts input:checked+span{border-color:var(--navy);background:#EEF3FC;box-shadow:inset 0 0 0 1px var(--navy);color:var(--navy);font-weight:600}
+  .opts input:focus-visible+span{outline:2px solid var(--navy-m);outline-offset:2px}
+  .chk{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.4;color:var(--muted);cursor:pointer;margin-top:2px}
+  .chk input{width:17px;height:17px;margin:0;accent-color:var(--navy);flex:0 0 auto;cursor:pointer}
+  .chk a{color:var(--navy-m);font-weight:500;text-underline-offset:2px}
+  .chk em{color:var(--red);font-style:normal}
+  .chk.err{color:var(--red)}
+  button.cta{appearance:none;border:0;cursor:pointer;margin-top:6px;border-radius:12px;padding:15px 18px;color:#fff;font-family:var(--H);font-weight:600;font-size:16px;
+    background:linear-gradient(90deg,var(--red),#A90D22);box-shadow:0 14px 28px -16px rgba(200,16,46,.8);display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .15s,filter .2s}
+  .f-err{display:none;margin:2px 0 0;font-size:13px;color:var(--red);line-height:1.4}
+  .f-err.on{display:block}
+  button.cta[disabled]{opacity:.7;cursor:progress}
+  button.cta:hover{filter:brightness(1.07)}
+  button.cta:active{transform:translateY(1px)}
+  .ok{display:none;text-align:center;padding:10px 0 4px}
+  .ok .tick{width:58px;height:58px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:#EAF5EC;color:#2F7A3E}
+  .ok .tick svg.i{width:28px;height:28px;stroke-width:2.4}
+  .ok h3{margin:0 0 6px;font-size:21px;font-weight:700;color:var(--navy)}
+  .ok p{margin:0 0 14px;color:var(--muted);font-size:14.5px}
+  .ok dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;text-align:left;background:var(--bg);border-radius:12px;padding:14px 16px;font-size:14px}
+  .ok dt{color:var(--muted)} .ok dd{margin:0;font-weight:500;color:var(--ink)}
+  form.done>:not(.ok){display:none}
+  form.done .ok{display:block}
+  @media (min-width:1061px) and (max-height:820px){
+    .p-logo{width:180px;margin-bottom:26px}
+    .p-pill{margin-bottom:10px;padding:6px 12px;font-size:11px}
+    .p-h{font-size:22px;margin-bottom:12px}
+    .p-sub{display:none}
+    form{gap:8px}
+    .in{padding:10px 12px;font-size:14.5px}
+    fieldset.chips{margin-top:2px} fieldset.chips legend{margin-bottom:5px}
+    .opts span{min-height:38px;font-size:12.5px}
+    .chk{font-size:12px}
+    button.cta{padding:13px 16px;font-size:15px;margin-top:4px}
+  }
+  @media (min-width:1061px) and (max-height:620px){
+    .p-logo{width:150px;margin-bottom:16px}
+    .fcard{padding:12px 24px}
+    .p-h{font-size:20px;margin-bottom:10px}
+    .in{padding:9px 12px}
+    .opts span{min-height:34px} .opts span small{display:none}
+    button.cta{padding:12px 16px}
+  }
+
+  /* ===== bölümler ===== */
+  .sec{padding-top:clamp(56px,8vh,92px)}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--red);margin:0 0 10px}
+  .eyebrow::before{content:"";width:22px;height:2px;background:currentColor}
+  .sec>h2{font-weight:700;font-size:clamp(28px,2.6vw,38px);line-height:1.08;color:var(--navy);margin:0 0 clamp(24px,3.5vh,36px)}
+
+  .tag{display:inline-flex;align-items:center;gap:9px;padding:7px 13px 7px 8px;border-radius:999px;background:rgba(255,255,255,.95);white-space:nowrap;
+    font-family:var(--H);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy)}
+  .tag svg{width:24px;height:16px;border-radius:3px;display:block;flex:0 0 auto}
+  .badge{white-space:nowrap;padding:7px 13px;border-radius:999px;font-family:var(--H);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#fff;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+  .country{position:relative;isolation:isolate;background:#0b1f4a;color:#fff;border-radius:24px;overflow:hidden;box-shadow:0 40px 70px -46px rgba(5,22,52,.7)}
+  .country+.country{margin-top:22px}
+  .country::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:linear-gradient(to top,rgba(8,22,52,.95) 0%,rgba(8,22,52,.86) 26%,rgba(8,22,52,.62) 50%,rgba(8,22,52,.26) 70%,rgba(8,22,52,.45) 100%)}
+  .c-hero{position:relative;overflow:hidden;min-height:clamp(440px,34vw,520px);display:flex;flex-direction:column;justify-content:space-between;padding:20px 24px 22px}
+  .c-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;background:#0b1f4a}
+  .c-body{position:relative}
+  .c-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .c-copy{max-width:640px}
+  .c-copy h3{font-weight:700;font-size:clamp(24px,2.3vw,32px);line-height:1.12;color:#fff;margin:0 0 10px;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+  .c-copy p{margin:0;font-size:15.5px;line-height:1.55;color:rgba(255,255,255,.85);text-shadow:0 1px 12px rgba(0,0,0,.3)}
+  .c-body{padding:4px 24px 26px}
+
+  /* kompakt özellik kartları + üstte açılan açıklama */
+  .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:20px}
+  .tile{position:relative;padding:11px 34px 11px 14px;border-radius:13px;cursor:default;outline:none;
+    background:rgba(8,20,48,.42);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    transition:background .25s,border-color .25s}
+  .tile>b{display:block;font-family:var(--H);font-weight:650;font-size:16px;line-height:1.2;color:#fff;letter-spacing:-.01em}
+  .tile>span{display:block;font-size:12.5px;line-height:1.3;color:rgba(255,255,255,.72);margin-top:3px}
+  .tile .info{position:absolute;top:10px;right:10px;width:17px;height:17px;border-radius:50%;border:1px solid rgba(255,255,255,.45);
+    display:grid;place-items:center;font:600 10.5px/1 var(--H);font-style:normal;color:#fff}
+  .tile .info::before{content:"i"}
+  .tile:hover,.tile.open,.tile:focus-visible{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5)}
+  .tip{position:absolute;left:0;bottom:calc(100% + 10px);width:max(100%,270px);z-index:5;pointer-events:none;
+    background:#fff;color:var(--text);border-radius:14px;padding:14px 16px 15px;box-shadow:0 26px 50px -18px rgba(0,0,0,.6);
+    opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease,visibility .22s}
+  .tip::after{content:"";position:absolute;top:100%;left:20px;border:7px solid transparent;border-top-color:#fff}
+  .tile:nth-child(n+3) .tip{left:auto;right:0}
+  .tile:nth-child(n+3) .tip::after{left:auto;right:20px}
+  .tip b{display:block;font-family:var(--H);font-weight:650;font-size:15px;color:var(--navy);margin-bottom:4px}
+  .tip p{margin:0;font-size:13.5px;line-height:1.5;color:#4A5470}
+  .tile.open .tip,.tile:focus-visible .tip{opacity:1;visibility:visible;transform:none}
+  @media (hover:hover){ .tile:hover .tip{opacity:1;visibility:visible;transform:none} }
+  .strip{display:flex;gap:14px;align-items:flex-start;margin-top:8px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:16px 18px;border-radius:16px;
+    background:linear-gradient(90deg,rgba(200,16,46,.22),rgba(200,16,46,.06));border:1px solid rgba(200,16,46,.35)}
+  .s-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--red);color:#fff;flex:0 0 auto}
+  .s-ic svg.i{width:22px;height:22px}
+  .strip b{display:block;font-family:var(--H);font-weight:650;font-size:16.5px;margin-bottom:2px}
+  .strip p{margin:0;font-size:14px;color:rgba(255,255,255,.75);line-height:1.5}
+  .country .btn{margin-top:18px}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:12px;font-family:var(--H);font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;border:0;transition:transform .15s,filter .2s}
+  .btn:active{transform:translateY(1px)}
+  .btn.red{background:var(--red);color:#fff;box-shadow:0 14px 28px -16px rgba(200,16,46,.9)}
+  .btn.navy{background:var(--navy);color:#fff}
+  .btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+  .btn:hover{filter:brightness(1.08)}
+  .btn .ar{transition:transform .2s}
+  .btn:hover .ar{transform:translateX(4px)}
+
+  .talk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .talk div{padding:22px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+  .talk .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--navy);color:#fff;margin-bottom:14px}
+  .talk h4{font-size:16.5px;font-weight:650;margin:0 0 4px;color:var(--navy)}
+  .talk p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.5}
+
+  .mapwrap{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);border-radius:22px;overflow:hidden;height:440px;background:#fff;
+    border:1px solid var(--line);box-shadow:0 40px 70px -46px rgba(5,22,52,.45)}
+  .map-frame{position:relative;min-width:0;background:#e8edf4}
+  .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .map-fb{position:absolute;inset:0;display:none;background:radial-gradient(500px 300px at 72% 50%,rgba(244,176,74,.22),transparent 60%),linear-gradient(150deg,#0B2656,#061738)}
+  .map-fb::before{content:"";position:absolute;inset:0;opacity:.35;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:34px 34px}
+  .map-fb .pin{position:absolute;left:70%;top:50%;transform:translate(-50%,-100%);width:46px;height:46px;border-radius:50% 50% 50% 0;rotate:-45deg;background:var(--red)}
+  .map-fb .fb-cta{position:absolute;left:70%;top:calc(50% + 18px);transform:translateX(-50%);white-space:nowrap;padding:10px 16px;border-radius:999px;background:#fff;color:var(--navy);font-family:var(--H);font-weight:600;font-size:14px;box-shadow:0 14px 30px -14px rgba(0,0,0,.6);transition:transform .2s}
+  .map-fb .fb-cta i{font-style:normal;color:var(--red)}
+  .map-fb:hover .fb-cta{transform:translateX(-50%) translateY(-2px)}
+  .map-fb .pin::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff}
+  .mapwrap.nomap .map-fb{display:block}
+  .map-fb .pin{left:50%!important} .map-fb .fb-cta{left:50%!important}
+  .map-card{display:flex;flex-direction:column;justify-content:center;padding:28px 28px 26px;background:#fff;border-right:1px solid var(--line)}
+  .map-card h3{font-size:23px;font-weight:700;line-height:1.1;color:var(--navy)}
+  .map-card .where{font-family:var(--H);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin:6px 0 16px}
+  .map-card .addr{margin:-10px 0 14px;font-size:13.5px;color:var(--muted);line-height:1.45}
+  .map-card .when{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--bg);margin-bottom:16px}
+  .map-card .when b{font-family:var(--H);font-weight:650;color:var(--navy);font-size:15px;display:block;line-height:1.2}
+  .map-card .when span{font-size:13px;color:var(--muted)}
+  .map-card .when svg.i{color:var(--navy)}
+  .map-card .acts{display:flex;gap:8px;flex-wrap:wrap}
+  .map-card .btn{padding:11px 15px;font-size:13.5px}
+
+  .faq{border-top:1px solid #D9DFEA}
+  .faq details{border-bottom:1px solid #D9DFEA}
+  .faq summary{list-style:none;cursor:pointer;padding:19px 44px 19px 0;font-family:var(--H);font-weight:600;font-size:16.5px;color:var(--navy);position:relative}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"";position:absolute;right:6px;top:50%;width:16px;height:16px;margin-top:-8px;transition:transform .3s;
+    background:linear-gradient(var(--red),var(--red)) center/16px 1.8px no-repeat,linear-gradient(var(--red),var(--red)) center/1.8px 16px no-repeat}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq p{margin:-4px 0 20px;color:var(--muted);max-width:70ch;font-size:15.5px}
+
+  footer{margin-top:clamp(56px,8vh,90px);padding:22px 0 6px;border-top:1px solid #D9DFEA;display:flex;justify-content:space-between;gap:12px 30px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  footer .fname{font-family:var(--H);color:var(--navy);letter-spacing:.14em;text-transform:uppercase;font-size:12.5px;font-weight:700}
+  footer .flogo{display:none;height:30px;width:auto;margin-bottom:8px}
+  footer .flogo.has{display:block} footer .flogo.has+.fname{display:none}
+  footer p{margin:0;max-width:60ch}
+
+  .m-bar{display:none}
+  .js .rv{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .js .rv.shown{opacity:1;transform:none}
+
+  /* ===== tablet / mobil ===== */
+  @media (max-width:1060px){
+    .bgfix{display:none}
+    .m-top{display:flex;order:0;align-items:center;justify-content:center;background:#fff;padding:14px 18px;border-bottom:1px solid var(--line)}
+    .m-top img{width:168px;height:auto}
+    .p-logo{display:none}
+    .stage{display:flex;flex-direction:column}
+    .left{display:contents}
+    .hero{order:1;height:auto;aspect-ratio:4/3;overflow:hidden}
+    .hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:0% 30%}
+    .side{order:2;position:static;width:auto;height:auto;display:block;pointer-events:auto}
+    .content{order:3;border-radius:0;box-shadow:none;padding:0 18px 30px}
+    .fcard{max-height:none;border-radius:0;box-shadow:none;padding:26px 18px 34px}
+    .p-body{max-width:520px;margin:0 auto}
+    body{padding-bottom:72px}
+    .m-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#061636;padding:11px 14px;align-items:center;justify-content:space-between;gap:12px;
+      box-shadow:0 -10px 30px -10px rgba(0,0,0,.5);transition:transform .35s ease}
+    .m-bar.hide{transform:translateY(110%)}
+    .m-bar .l{color:#fff;font-size:12px;line-height:1.3}
+    .m-bar .l b{display:block;font-family:var(--H);font-weight:650;font-size:14.5px}
+    .m-bar a{background:var(--red);color:#fff;text-decoration:none;font-family:var(--H);font-weight:600;font-size:14.5px;padding:12px 18px;border-radius:10px}
+  }
+  @media (max-width:640px){
+    .talk{grid-template-columns:minmax(0,1fr)}
+    .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .tile:nth-child(n+3) .tip{left:0;right:auto} .tile:nth-child(n+3) .tip::after{left:20px;right:auto}
+    .tile:nth-child(even) .tip{left:auto;right:0} .tile:nth-child(even) .tip::after{left:auto;right:20px}
+    .tip{width:min(270px,calc(200% + 8px))}
+    .c-hero{min-height:560px;padding:16px 16px 18px}
+    .c-body{padding:14px 16px 20px}
+    .country .btn{width:100%;justify-content:center}
+    .mapwrap{grid-template-columns:minmax(0,1fr);height:auto}
+    .map-frame{height:300px;order:-1}
+    .map-card{border-right:0;border-top:1px solid var(--line);padding:22px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="f-gr" viewBox="0 0 27 18"><rect width="27" height="18" fill="#0D5EAF"/><g fill="#fff"><rect y="2" width="27" height="2"/><rect y="6" width="27" height="2"/><rect y="10" width="27" height="2"/><rect y="14" width="27" height="2"/></g><rect width="10" height="10" fill="#0D5EAF"/><rect x="4" width="2" height="10" fill="#fff"/><rect y="4" width="10" height="2" fill="#fff"/></symbol>
+  <symbol id="f-uk" viewBox="0 0 60 30"><clipPath id="ukA"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="ukB"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#ukA)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#ukB)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></symbol>
+</svg>
+
+<div class="bgfix" aria-hidden="true"><img src="img/bg.jpg" alt="İngiltere · Yunanistan yurt dışı gayrimenkul — İzmir Özel Yatırım Etkinliği. 4–5 Aralık, Moxy Hotel Bayraklı, İzmir. Uzmanlarla birebir görüşme."><img class="mir" src="img/bg.jpg" alt=""></div>
+<div class="stage">
+  <header class="m-top"><img src="img/logo.png" alt="Golden Partner" width="720" height="115"></header>
+  <div class="left">
+    <figure class="hero">
+      <h1 class="sr">İzmir Özel Yatırım Etkinliği — İngiltere ve Yunanistan yurt dışı gayrimenkul, 4–5 Aralık, Moxy Hotel Bayraklı, İzmir</h1>
+      <img src="img/bg.jpg" alt="İngiltere · Yunanistan yurt dışı gayrimenkul — İzmir Özel Yatırım Etkinliği. 4–5 Aralık, Moxy Hotel Bayraklı, İzmir. Uzmanlarla birebir görüşme.">
+    </figure>
+    <main class="content">
+      <section class="sec" id="programlar">
+        <p class="eyebrow rv">Etkinlikte neler var</p>
+        <h2 class="rv">İki ülke, iki fırsat</h2>
+
+        <article class="country rv">
+          <video class="c-vid" src="vid/gr.mp4" poster="vid/gr.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+          <div class="c-hero">
+            <div class="c-top"><span class="tag"><svg><use href="#f-gr"/></svg>Yunanistan</span><span class="badge">Golden Visa</span></div>
+            <div class="c-bottom">
+            <div class="c-copy">
+              <h3>Yunanistan’da Golden Visa ile Avrupa’da Oturum!</h3>
+              <p>€250.000’luk uygun gayrimenkul yatırımlarıyla Avrupa’da oturum, aileniz için yeni fırsatlar ve Schengen ülkelerine vizesiz seyahat imkânı.</p>
+            </div>
+              <div class="tiles">
+                <div class="tile" tabindex="0"><b>5 Yıl</b><span>Yenilenebilir Oturum İzni</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>5 Yıl</b><p>Yunanistan Golden Visa programıyla 5 yıllık oturum izni elde edin. Gerekli şartlar sağlandığı sürece oturum izninizi yenileyin.</p></div></div>
+                <div class="tile" tabindex="0"><b>3 Kuşak</b><span>Aileniz de Dahil</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>3 Kuşak</b><p>Eşiniz, 21 yaş altı çocuklarınız ve uygunluk koşullarını sağlayan her iki tarafın ebeveynleriyle 3 kuşağı kapsayan oturum fırsatından yararlanın.</p></div></div>
+                <div class="tile" tabindex="0"><b>Schengen</b><span>Vizesiz Seyahat</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>Schengen</b><p>Yunanistan oturum izninizle diğer Schengen ülkelerine 180 günlük dönemde 90 güne kadar vizesiz seyahat edin.</p></div></div>
+                <div class="tile" tabindex="0"><b>İkamet Zorunluluğu Yok</b><span>Esnek Yaşam</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>İkamet Zorunluluğu Yok</b><p>Yunanistan’da sürekli yaşama zorunluluğu olmadan, Türkiye’deki yaşamınızı sürdürürken oturum izninizin avantajlarından yararlanın.</p></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-body">
+            <button class="btn red" data-pick="gr">Golden Visa İçin Randevu Al <span class="ar">→</span></button>
+          </div>
+        </article>
+
+        <article class="country rv">
+          <video class="c-vid" src="vid/uk.mp4" poster="vid/uk.jpg" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+          <div class="c-hero">
+            <div class="c-top"><span class="tag"><svg><use href="#f-uk"/></svg>İngiltere</span><span class="badge">Mortgage</span></div>
+            <div class="c-bottom">
+            <div class="c-copy">
+              <h3>Londra’da kira ödemeyin, Mortgage ile ev sahibi olun.</h3>
+              <p>Londra’nın seçkin konut projelerinde mortgage seçeneklerini keşfedin. Kira geliri potansiyeli ve uzun vadeli yatırım fırsatlarını değerlendirin.</p>
+            </div>
+              <div class="tiles">
+                <div class="tile" tabindex="0"><b>25 Yıla Kadar</b><span>Mortgage Vadesi</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>25 Yıla Kadar</b><p>Finansal durumunuz ve kredi uygunluğunuza göre 25 yıla kadar vadeli mortgage seçenekleriyle Londra’da gayrimenkul yatırımınızı planlayın.</p></div></div>
+                <div class="tile" tabindex="0"><b>Yeni Projeler</b><span>Seçkin Konutlar</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>Yeni Projeler</b><p>Londra’nın gelişen bölgelerindeki modern, prestijli ve farklı bütçelere hitap eden konut projelerini keşfedin.</p></div></div>
+                <div class="tile" tabindex="0"><b>Kira Geliri</b><span>Düzenli Gelir Potansiyeli</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>Kira Geliri</b><p>Londra’nın güçlü kiralama pazarında, gayrimenkulünüzün konumuna ve özelliklerine göre kira geliri potansiyelini değerlendirin.</p></div></div>
+                <div class="tile" tabindex="0"><b>Değer Artışı</b><span>Uzun Vadeli Yatırım</span><i class="info" aria-hidden="true"></i><div class="tip" role="tooltip"><b>Değer Artışı</b><p>Gelişen lokasyonlar ve yeni konut projeleriyle gayrimenkulünüzün uzun vadeli değer artışı potansiyelini keşfedin.</p></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-body">
+            <button class="btn red" data-pick="uk">İngiltere Yatırımı İçin Randevu Al <span class="ar">→</span></button>
+          </div>
+        </article>
+      </section>
+
+      <section class="sec">
+        <p class="eyebrow rv">Birebir görüşme</p>
+        <h2 class="rv">Yatırım Yolculuğunuzun Her Adımında Yanınızdayız.</h2>
+        <div class="talk rv">
+          <div><span class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span><h4>Bütçe ve finansman</h4><p>Kişiye özel ödeme planları ve mortgage imkânları.</p></div>
+          <div><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span><h4>Ülke ve program</h4><p>Hedefinize göre Yunanistan, İngiltere ya da ikisi.</p></div>
+          <div><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 8l8 2v11M7 8h2M7 12h2M7 16h2M15 13h2M15 17h2M2 21h20"/></svg></span><h4>Proje ve bölge</h4><p>Bütçenize uyan projeler üzerinden somut seçenekler.</p></div>
+          <div><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M4 19h16M4 15l4-4 3 3 5-6 4 4"/></svg></span><h4>Süreç ve takvim</h4><p>Tapudan oturum iznine adım adım yol haritası.</p></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <p class="eyebrow rv">Etkinlik yeri</p>
+        <h2 class="rv">Moxy Hotel, Bayraklı</h2>
+        <div class="mapwrap rv" id="map">
+          
+          <div class="map-card">
+            <h3>Moxy Hotel</h3>
+            <p class="where">Bayraklı · İzmir</p>
+            <p class="addr">Turan, 1649. Sk. No:67, 35540 Bayraklı / İzmir</p>
+            <div class="when"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><div><b>4–5 Aralık 2026</b><span>Cuma – Cumartesi</span></div></div>
+            <div class="acts">
+              <a class="btn navy" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Moxy%20%C4%B0zmir%2C%20Turan%2C%201649.%20Sk.%20No%3A67%2C%2035540%20Bayrakl%C4%B1/%C4%B0zmir"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>Yol tarifi</a>
+              <a class="btn ghost" target="_blank" rel="noopener" data-cal href="#"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg>Takvime ekle</a>
+            </div>
+          </div>
+          <div class="map-frame" id="map-frame"><a class="map-fb" href="https://www.google.com/maps/search/?api=1&query=Moxy%20%C4%B0zmir%2C%20Turan%2C%201649.%20Sk.%20No%3A67%2C%2035540%20Bayrakl%C4%B1/%C4%B0zmir" target="_blank" rel="noopener" aria-label="Moxy İzmir konumunu Google Maps’te aç"><span class="pin"></span><span class="fb-cta">Google Maps’te aç <i>↗</i></span></a></div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <p class="eyebrow rv">Sık sorulanlar</p>
+        <h2 class="rv">Aklınızdaki sorular</h2>
+        <div class="faq rv">
+          <details open><summary>Görüşme için randevu almam gerekiyor mu?</summary><p>Birebir görüşmeler önceden planlanır. Formu doldurduğunuzda ekibimiz sizi arayarak uygun gün ve saati birlikte belirler.</p></details>
+          <details><summary>Yunanistan Golden Visa için minimum yatırım nedir?</summary><p>Attika, Selanik, Mikonos, Santorini ve nüfusu 3.100’ü aşan adalarda €800.000, diğer bölgelerde €400.000’dir. Ticari mülkün konuta dönüştürülmesi veya tescilli yapı restorasyonunda €250.000 eşiği uygulanır.</p></details>
+          <details><summary>İngiltere’de yabancılara mortgage veriliyor mu?</summary><p>Evet; yurt dışında yaşayan alıcılar için de 25 yıla kadar vadeli mortgage seçenekleri bulunur. Koşullar gelir ve kredi değerlendirmesine göre belirlenir.</p></details>
+        </div>
+      </section>
+
+      <footer>
+        <div><img class="flogo" src="img/logo.png" alt="Golden Partner" data-flogo><span class="fname">Golden Partner</span><p style="margin-top:6px">Uluslararası gayrimenkul yatırımları</p></div>
+        <p>Yatırım tutarları, mortgage koşulları ve program şartları resmî düzenlemelere ve kredi değerlendirmesine göre değişebilir. Bu sayfa yatırım tavsiyesi değildir. © 2026 Golden Partner</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="side">
+    <aside class="fcard" id="kayit">
+      <div class="p-body" id="p-body">
+        <img class="p-logo" src="img/logo.png" alt="Golden Partner" width="720" height="115">
+        <p class="p-pill"><span class="live"></span>4–5 Aralık · Moxy Hotel Bayraklı</p>
+        <h2 class="p-h">Randevunuzu ayırtın</h2>
+        <p class="p-sub">Formu doldurun, ekibimiz sizi arayıp görüşme saatinizi netleştirsin.</p>
+        <form id="lead" novalidate>
+          <input class="in" id="name" type="text" placeholder="Ad Soyad *" autocomplete="name">
+          <div class="row">
+            <select class="in" id="cc" aria-label="Ülke kodu">
+              <option value="+90" selected>TR +90</option><option value="+44">UK +44</option><option value="+30">GR +30</option><option value="+49">DE +49</option><option value="+971">AE +971</option>
+            </select>
+            <input class="in" id="phone" type="tel" inputmode="tel" placeholder="Telefon *" autocomplete="tel-national">
+          </div>
+          <input class="in" id="email" type="email" placeholder="E-posta (opsiyonel)" autocomplete="email">
+          <fieldset class="chips"><legend>İlgilendiğiniz program</legend>
+            <div class="opts">
+              <label><input type="radio" name="program" value="Yunanistan Golden Visa" data-k="gr" checked><span>Yunanistan<small>Golden Visa</small></span></label>
+              <label><input type="radio" name="program" value="İngiltere · Mortgage" data-k="uk"><span>İngiltere<small>Mortgage</small></span></label>
+            </div>
+          </fieldset>
+          <fieldset class="chips"><legend>Gün tercihi</legend>
+            <div class="opts">
+              <label><input type="radio" name="day" value="4 Aralık Cuma"><span>4 Aralık<small>Cuma</small></span></label>
+              <label><input type="radio" name="day" value="5 Aralık Cumartesi"><span>5 Aralık<small>Cumartesi</small></span></label>
+            </div>
+          </fieldset>
+          <label class="chk" id="c1-box"><input id="c1" type="checkbox"><span><a href="#" data-noop>KVKK aydınlatma metnini</a> okudum, anladım. <em>*</em></span></label>
+          <label class="chk"><input id="c2" type="checkbox"><span>Ticari elektronik ileti almayı kabul ediyorum.</span></label>
+          <input type="text" name="website" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <p class="f-err" id="f-err" role="alert"></p>
+          <button class="cta" type="submit">Randevu talep et <span aria-hidden="true">→</span></button>
+          <div class="ok" id="ok" aria-live="polite">
+            <div class="tick"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Talebiniz alındı</h3>
+            <p>Ekibimiz sizi arayarak görüşme saatinizi netleştirecek.</p>
+            <dl id="ok-sum"></dl>
+          </div>
+        </form>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="m-bar">
+  <div class="l">4–5 Aralık · Moxy Bayraklı<b>Birebir görüşme</b></div>
+  <a href="#kayit" data-top>Randevu al</a>
+</div>
+
+<script>
+document.documentElement.classList.add("js");
+const $=s=>document.querySelector(s);
+document.querySelectorAll("[data-noop]").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+
+/* Logo (img/logo.png varsa) */
+[[$("[data-flogo]"),()=>$("[data-flogo]").classList.add("has")]].forEach(([img,ok])=>{
+  if(!img)return; if(img.complete&&img.naturalWidth) ok(); else img.addEventListener("load",ok);});
+
+/* Takvim */
+const cal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Golden Partner · İzmir Özel Yatırım Etkinliği")+
+  "&dates=20261204/20261206&location="+encodeURIComponent("Moxy Hotel, Bayraklı, İzmir")+"&details="+encodeURIComponent("İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarla birebir görüşme.");
+document.querySelectorAll("[data-cal]").forEach(a=>a.href=cal);
+
+/* Geri sayım */
+(function(){const start=new Date(2026,11,4),end=new Date(2026,11,6),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const d=Math.round((start-today)/864e5),t=$("#count-txt");if(!t)return;
+  t.textContent=d>1?d+" gün kaldı":d===1?"Yarın başlıyor":now<end?"Etkinlik bugün":"Etkinlik tamamlandı";})();
+
+/* Google Maps */
+(function(){const box=$("#map");
+  if(location.protocol==="file:"){box.classList.add("nomap");return;}
+  const f=document.createElement("iframe");
+  f.src="https://maps.google.com/maps?q="+encodeURIComponent("Moxy İzmir, Turan, 1649. Sk. No:67, 35540 Bayraklı/İzmir")+"&z=16&hl=tr&output=embed";
+  f.title="Moxy Hotel Bayraklı, İzmir — harita"; f.loading="lazy"; f.referrerPolicy="no-referrer-when-downgrade";
+  document.addEventListener("securitypolicyviolation",e=>{if(/frame|child/.test(e.violatedDirective||e.effectiveDirective||"")){f.remove();box.classList.add("nomap");}});
+  box.classList.add("nomap");
+  f.addEventListener("load",()=>box.classList.remove("nomap"));
+  document.getElementById("map-frame").prepend(f);})();
+
+/* Program kısayolları */
+function pick(k){const r=document.querySelector(`input[name=program][data-k="${k}"]`);if(r)r.checked=true;}
+function goForm(){
+  const wide=matchMedia("(min-width:1061px)").matches;
+  if(!wide) document.getElementById("kayit").scrollIntoView({behavior:"smooth",block:"start"});
+  setTimeout(()=>{$("#name").focus({preventScroll:true});
+    $("#p-body").animate([{boxShadow:"0 0 0 0 rgba(200,16,46,.45)"},{boxShadow:"0 0 0 18px rgba(200,16,46,0)"}],{duration:900});},wide?0:550);
+}
+/* Videolar: görünürken oynat, değilken durdur */
+(function(){const vids=[...document.querySelectorAll(".c-vid")];if(!vids.length)return;
+  const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(rm){vids.forEach(v=>{v.removeAttribute("autoplay");v.pause();});return;}
+  if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target;
+      if(en.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else v.pause();}),{threshold:.15});
+    vids.forEach(v=>io.observe(v));}})();
+document.addEventListener("click",e=>{if(!e.target.closest(".tile"))document.querySelectorAll(".tile.open").forEach(x=>x.classList.remove("open"));});
+/* Kart açıklamaları: masaüstünde hover, dokunmatikte dokununca */
+document.querySelectorAll(".tile").forEach(t=>{
+  t.addEventListener("click",()=>{ if(!matchMedia("(hover:hover)").matches){ const o=t.classList.contains("open"); document.querySelectorAll(".tile.open").forEach(x=>x.classList.remove("open")); if(!o) t.classList.add("open"); }});
+  t.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();t.classList.toggle("open");}});
+});
+document.querySelectorAll("[data-top]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();goForm();}));
+document.querySelectorAll("[data-pick]").forEach(b=>{b.addEventListener("click",()=>{pick(b.dataset.pick);goForm();});b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(b.dataset.pick);goForm();}});});
+const H={yunanistan:"gr","golden-visa":"gr",ingiltere:"uk",mortgage:"uk"};
+if(H[location.hash.slice(1)]) pick(H[location.hash.slice(1)]);
+
+/* Form → lead.php (sunucuda liste + e-posta + CRM) */
+const T0=Date.now();
+$("#lead").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const form=e.target,btn=form.querySelector("button.cta"),err=$("#f-err");
+  const name=$("#name"),phone=$("#phone"),c1=$("#c1");
+  const okN=name.value.trim().length>=3,okP=phone.value.replace(/\D/g,"").length>=7;
+  name.classList.toggle("err",!okN);phone.classList.toggle("err",!okP);$("#c1-box").classList.toggle("err",!c1.checked);
+  err.classList.remove("on");
+  if(!okN||!okP||!c1.checked){(!okN?name:!okP?phone:c1).focus();return;}
+  const v=n=>{const x=document.querySelector(`input[name=${n}]:checked`);return x?x.value:"";};
+  const q=new URLSearchParams(location.search),utm={};
+  ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","gclid"].forEach(k=>{if(q.get(k))utm[k]=q.get(k);});
+  const data={name:name.value.trim(),cc:$("#cc").value,phone:phone.value.trim(),email:$("#email").value.trim(),
+    program:v("program"),day:v("day"),kvkk:c1.checked,ticari:$("#c2").checked,website:$("#hp").value,
+    t:Math.round((Date.now()-T0)/1000),page:location.href.split("#")[0],ref:document.referrer||"",utm};
+  btn.disabled=true;const old=btn.innerHTML;btn.innerHTML="Gönderiliyor…";
+  try{
+    const r=await fetch("lead.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok) throw new Error(j.error||"Gönderilemedi");
+    const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+    $("#ok-sum").innerHTML=`<dt>Ad Soyad</dt><dd>${esc(data.name)}</dd><dt>Program</dt><dd>${esc(data.program)}</dd><dt>Gün</dt><dd>${esc(data.day||"Belirtilmedi")}</dd>`;
+    form.classList.add("done");$("#p-body").classList.add("done");
+    if(window.fbq){try{fbq("track","Lead",{content_name:data.program});}catch(_){}}
+    if(!matchMedia("(min-width:1061px)").matches) document.getElementById("kayit").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(ex){
+    err.textContent=(ex&&ex.message&&ex.message!=="Failed to fetch"?ex.message+" ":"")+"Lütfen tekrar deneyin.";
+    err.classList.add("on");
+  }finally{btn.disabled=false;btn.innerHTML=old;}
+});
+["#name","#phone"].forEach(s=>$(s).addEventListener("input",e=>e.target.classList.remove("err")));
+$("#c1").addEventListener("change",()=>$("#c1-box").classList.remove("err"));
+
+/* Mobil alt bar + kaydırınca beliren bölümler */
+if("IntersectionObserver" in window){
+  const bar=$(".m-bar");
+  new IntersectionObserver(es=>es.forEach(en=>bar.classList.toggle("hide",en.isIntersecting)),{threshold:.1}).observe(document.getElementById("kayit"));
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("shown");io.unobserve(en.target);}}),{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+} else document.querySelectorAll(".rv").forEach(el=>el.classList.add("shown"));
+</script>
+</body>
+</html>

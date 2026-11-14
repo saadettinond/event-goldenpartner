@@ -1,0 +1,16 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# Ayar dosyasına ve gizli dosyalara tarayıcıdan erişim kapalı
+<FilesMatch "^(ayarlar(\.ornek)?\.php|\..*|.*\.md)$">
+  Require all denied
+</FilesMatch>
+
+# Görsel ve videolar tarayıcıda önbelleğe alınsın
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png  "access plus 30 days"
+  ExpiresByType video/mp4  "access plus 30 days"
+</IfModule>
+AddType video/mp4 .mp4

@@ -1,0 +1,7 @@
+# Sunucuya özel gizli ayarlar
+ayarlar.php
+# Talep listesi ve geçici dosyalar sunucuda kalır
+talepler/*
+!talepler/.htaccess
+!talepler/index.html
+.DS_Store
