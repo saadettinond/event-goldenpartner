@@ -3,9 +3,10 @@
  * Randevu formu alıcısı.
  * 1) talepler/talepler.csv dosyasına yazar (yedek liste, Excel ile açılır)
  * 2) ayarlar.php'deki adrese e-posta atar
- * 3) API anahtarı girildiyse CRM'e (app.houseofon.com.tr) lead olarak gönderir
+ * 3) Token girildiyse CRM webhook'una (goldenpartner.telos.com.tr) lead olarak gönderir
  */
 declare(strict_types=1);
+date_default_timezone_set('Europe/Istanbul');
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
@@ -104,21 +105,31 @@ if ($to !== '' && strpos($to, 'BURAYA') === false) {
     if (!$mailed) logx($logf, 'E-posta gönderilemedi');
 }
 
-// 3) CRM (Saleson / House of On Public Lead API)
+// 3) CRM webhook (Golden Partner CRM — goldenpartner.telos.com.tr, Bearer token)
 $key = trim((string)($cfg['crm_api_key'] ?? ''));
-if ($key !== '' && function_exists('curl_init')) {
-    $payload = [
-        'name'   => $name,
-        'phone'  => $phone,
-        'email'  => $email !== '' ? $email : null,
-        'source' => 'WEBSITE_FORM',
-        'tags'   => array_values(array_filter(array_merge((array)($cfg['crm_tags'] ?? []), [$program]))),
-        'note'   => ($cfg['event_name'] ?? 'Etkinlik') . " — Program: $program, Gün: $day",
-        'customData' => array_merge([
-            'etkinlik' => $cfg['event_name'] ?? '', 'program' => $program, 'gun' => $day,
-            'kvkk_onay' => true, 'ticari_ileti_onay' => $ticari, 'sayfa' => $page, 'referans' => $ref,
-        ], $utm),
-    ];
+if ($key !== '' && !empty($cfg['crm_url']) && function_exists('curl_init')) {
+    $event = (string)($cfg['event_name'] ?? 'Etkinlik');
+    $note  = "$event — Program: $program, Gün: $day" . ($ticari ? ' · Ticari ileti onayı: Evet' : '');
+    $payload = array_merge([
+        'name'              => $name,
+        'full_name'         => $name,
+        'phone'             => $phone,
+        'email'             => $email !== '' ? $email : null,
+        'source'            => 'event.goldenpartner.com.tr',
+        'form_name'         => 'İzmir Etkinliği Randevu Formu',
+        'campaign'          => $event,
+        'program'           => $program,
+        'interest'          => $program,
+        'preferred_day'     => $day,
+        'note'              => $note,
+        'message'           => $note,
+        'kvkk_consent'      => true,
+        'marketing_consent' => $ticari,
+        'page_url'          => $page,
+        'referrer'          => $ref,
+        'tags'              => array_values(array_filter(array_merge((array)($cfg['crm_tags'] ?? []), [$program]))),
+        'submitted_at'      => date('c'),
+    ], $utm);
     $ch = curl_init((string)$cfg['crm_url']);
     curl_setopt_array($ch, [
         CURLOPT_POST => true,

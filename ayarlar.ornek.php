@@ -15,7 +15,7 @@ return [
 
     // Saleson / House of On CRM — Ayarlar → Çalışma alanı → Entegrasyonlar → Lead API
     // sayfasından alınan anahtar. Boş bırakılırsa CRM'e gönderim atlanır.
-    'crm_url'     => 'https://app.houseofon.com.tr/api/public/leads',
+    'crm_url'     => 'https://goldenpartner.telos.com.tr/api/public/webhook',
     'crm_api_key' => '',
     'crm_tags'    => ['izmir-etkinlik', 'aralik-2026'],
 

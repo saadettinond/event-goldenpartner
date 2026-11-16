@@ -15,7 +15,7 @@ return [
     'mail_to'        => {q(mail)},
     'mail_from'      => 'noreply@goldenpartner.com.tr',
     'mail_from_name' => 'Golden Partner Etkinlik',
-    'crm_url'        => 'https://app.houseofon.com.tr/api/public/leads',
+    'crm_url'        => 'https://goldenpartner.telos.com.tr/api/public/webhook',
     'crm_api_key'    => {q(key)},
     'crm_tags'       => ['izmir-etkinlik', 'aralik-2026'],
     'event_name'     => 'İzmir Özel Yatırım Etkinliği · 4–5 Aralık 2026',
