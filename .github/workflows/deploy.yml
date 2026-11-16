@@ -48,3 +48,20 @@ jobs:
           LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           lftp -c "set ftp:ssl-allow yes; set ftp:ssl-protect-data yes; set ssl:verify-certificate no; set net:max-retries 3; set net:timeout 30; open -u '$FTP_USERNAME' --env-password '$FTP_SERVER'; mirror -R --verbose --no-perms --no-symlinks --parallel=3 -x '^\.git' -x '^\.github/' -x '^ayarlar\.php$' -x '\.DS_Store$' -x '^README' ./ ./"
+
+      - name: Ayar dosyası (mail + CRM) — GitHub secret'larından
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          LEAD_MAIL_TO: ${{ secrets.LEAD_MAIL_TO }}
+          CRM_API_KEY: ${{ secrets.CRM_API_KEY }}
+        run: |
+          if [ -z "$LEAD_MAIL_TO" ] && [ -z "$CRM_API_KEY" ]; then
+            echo "LEAD_MAIL_TO / CRM_API_KEY secret'ı yok — sunucudaki ayarlar.php'ye dokunulmadı."; exit 0
+          fi
+          umask 077; TMP=$(mktemp -d)
+          python3 .github/ayarlar-olustur.py "$TMP/ayarlar.php"
+          php_ok=$(command -v php >/dev/null && php -l "$TMP/ayarlar.php" >/dev/null && echo ok || echo skip); echo "php -l: $php_ok"
+          lftp -c "set ftp:ssl-allow yes; set ftp:ssl-protect-data yes; set ssl:verify-certificate no; set net:max-retries 3; set net:timeout 30; open -u '$FTP_USERNAME' --env-password '$FTP_SERVER'; put '$TMP/ayarlar.php' -o ayarlar.php"
+          rm -rf "$TMP"
