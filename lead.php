@@ -69,7 +69,10 @@ if (!$kvkk)                 out(422, ['ok' => false, 'error' => 'KVKK onayı ger
 if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) $email = '';
 
 $now = date('Y-m-d H:i:s');
-$saved = false; $mailed = false; $crm = false;
+$saved = false; $mailed = false; $crm = false; $capiCode = null;
+// Test modu (sayfa ?test=1 ile açıldıysa): mail ve CRM'e gitmez, listeye [TEST] olarak yazılır, OpenAI dönüşümü gider
+$test = !empty($in['test']);
+if ($test) $name = '[TEST] ' . $name;
 
 // 1) CSV
 $csv = $dir . '/talepler.csv';
@@ -88,7 +91,7 @@ if (!$saved) logx($logf, 'CSV yazılamadı');
 
 // 2) E-posta
 $to = trim((string)($cfg['mail_to'] ?? ''));
-if ($to !== '' && strpos($to, 'BURAYA') === false) {
+if (!$test && $to !== '' && strpos($to, 'BURAYA') === false) {
     $subj = '=?UTF-8?B?' . base64_encode('Yeni randevu talebi · ' . $program . ' · ' . $name) . '?=';
     $lines = [
         $cfg['event_name'] ?? 'Etkinlik', str_repeat('-', 40),
@@ -107,7 +110,7 @@ if ($to !== '' && strpos($to, 'BURAYA') === false) {
 
 // 3) CRM webhook (Golden Partner CRM — goldenpartner.telos.com.tr, Bearer token)
 $key = trim((string)($cfg['crm_api_key'] ?? ''));
-if ($key !== '' && !empty($cfg['crm_url']) && function_exists('curl_init')) {
+if (!$test && $key !== '' && !empty($cfg['crm_url']) && function_exists('curl_init')) {
     $event = (string)($cfg['event_name'] ?? 'Etkinlik');
     $note  = "$event — Program: $program, Gün: $day" . ($ticari ? ' · Ticari ileti onayı: Evet' : '');
     $payload = array_merge([
@@ -182,8 +185,11 @@ if ($capiKey !== '' && $pixelId !== '' && function_exists('curl_init')) {
     $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $cerr = curl_error($ch);
     curl_close($ch);
+    $capiCode = $code;
+    if ($test) $capiRes = mb_substr((string)($cerr ?: $res), 0, 300);
     if ($code < 200 || $code >= 300) logx($logf, "OpenAI CAPI hatası ($code) " . ($cerr ?: mb_substr((string)$res, 0, 300)));
 }
 
+if ($test) out(200, ['ok' => true, 'test' => true, 'openai_capi' => $capiCode, 'openai_capi_yanit' => $capiRes ?? null, 'liste' => $saved]);
 if (!$saved && !$mailed && !$crm) out(500, ['ok' => false, 'error' => 'Talebiniz kaydedilemedi.']);
 out(200, ['ok' => true]);

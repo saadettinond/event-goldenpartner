@@ -483,6 +483,11 @@ document.querySelectorAll("[data-noop]").forEach(a=>a.addEventListener("click",e
 /* Takvim */
 const cal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Golden Partner · İzmir Özel Yatırım Etkinliği")+
   "&dates=20261204/20261206&location="+encodeURIComponent("Moxy Hotel, Bayraklı, İzmir")+"&details="+encodeURIComponent("İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarla birebir görüşme.");
+/* Test modu: ?test=1 → mail/CRM'e gitmez, sadece listeye [TEST] olarak yazılır ve OpenAI dönüşümü gider */
+const TESTMODE=new URLSearchParams(location.search).has("test");
+if(TESTMODE){const b=document.createElement("div");b.textContent="TEST MODU · mail ve CRM'e gitmez";
+  b.style.cssText="position:fixed;left:12px;bottom:12px;z-index:9999;background:#C8102E;color:#fff;font:600 12px/1 system-ui;padding:8px 11px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25)";
+  document.addEventListener("DOMContentLoaded",()=>document.body.appendChild(b));if(document.body)document.body.appendChild(b);}
 /* Takvime ekle: Apple (iPhone/Mac, .ics) · Google · Outlook */
 (function(){const T="Golden Partner · İzmir Özel Yatırım Etkinliği",L="Moxy İzmir, Turan, 1649. Sk. No:67, 35540 Bayraklı/İzmir",
   D="İngiltere · Yunanistan yurt dışı gayrimenkul — uzmanlarla birebir görüşme.\nhttps://event.goldenpartner.com.tr";
@@ -584,11 +589,12 @@ $("#lead").addEventListener("submit",async e=>{
   const data={name:name.value.trim(),cc:$("#cc").value,phone:phone.value.trim(),email:$("#email").value.trim(),
     program:v("program"),day:v("day"),kvkk:c1.checked,ticari:$("#c2").checked,website:$("#hp").value,
     t:Math.round((Date.now()-T0)/1000),page:location.href.split("#")[0],ref:document.referrer||"",utm,
-    event_id:"apt-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10)};
+    event_id:"apt-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10),test:TESTMODE};
   btn.disabled=true;const old=btn.innerHTML;btn.innerHTML="Gönderiliyor…";
   try{
     const r=await fetch("lead.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
     const j=await r.json().catch(()=>({}));
+    if(TESTMODE) console.log("[TEST] lead.php yanıtı:",j);
     if(!r.ok||!j.ok) throw new Error(j.error||"Gönderilemedi");
     const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
     $("#ok-sum").innerHTML=`<dt>Ad Soyad</dt><dd>${esc(data.name)}</dd><dt>Telefon</dt><dd>${esc(data.cc+" "+data.phone)}</dd><dt>Program</dt><dd>${esc(data.program)}</dd>${data.day?`<dt>Gün</dt><dd>${esc(data.day)}</dd>`:""}`;
