@@ -7,7 +7,7 @@ def q(v: str) -> str:
 mail = ",".join(p.strip() for p in os.environ.get("LEAD_MAIL_TO", "").replace(";", ",").split(",") if p.strip())
 key = os.environ.get("CRM_API_KEY", "").strip()
 capi = os.environ.get("OPENAI_CAPI_KEY", "").strip()
-pixel = os.environ.get("OPENAI_PIXEL_ID", "").strip() or "TnxcKeskpauFx4vdJgFcL3"
+pixel = os.environ.get("OPENAI_PIXEL_ID", "").strip() or "FTNLk8Leg1eBJJ8m68Pnoh"
 out = sys.argv[1]
 
 php = f"""<?php
