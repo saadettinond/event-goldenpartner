@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- OpenAI Ads Measurement Pixel -->
+<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"TnxcKeskpauFx4vdJgFcL3",debug:true});</script>
 <title>İzmir Özel Yatırım Etkinliği · 4–5 Aralık · Golden Partner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -595,6 +597,7 @@ $("#lead").addEventListener("submit",async e=>{
     form.classList.add("done");$("#p-body").classList.add("done");
     setTimeout(()=>{try{$("#ok").focus({preventScroll:true});}catch(_){}} ,50);
     if(window.fbq){try{fbq("track","Lead",{content_name:data.program});}catch(_){}}
+    if(window.oaiq){try{oaiq("measure","lead_created",{type:"customer_action"},{event_id:"lead-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)});}catch(_){}}
     if(!matchMedia("(min-width:1061px)").matches) document.getElementById("kayit").scrollIntoView({behavior:"smooth",block:"start"});
   }catch(ex){
     err.textContent=(ex&&ex.message&&ex.message!=="Failed to fetch"?ex.message+" ":"")+"Lütfen tekrar deneyin.";
