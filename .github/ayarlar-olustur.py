@@ -6,6 +6,8 @@ def q(v: str) -> str:
 
 mail = ",".join(p.strip() for p in os.environ.get("LEAD_MAIL_TO", "").replace(";", ",").split(",") if p.strip())
 key = os.environ.get("CRM_API_KEY", "").strip()
+capi = os.environ.get("OPENAI_CAPI_KEY", "").strip()
+pixel = os.environ.get("OPENAI_PIXEL_ID", "").strip() or "TnxcKeskpauFx4vdJgFcL3"
 out = sys.argv[1]
 
 php = f"""<?php
@@ -19,8 +21,10 @@ return [
     'crm_api_key'    => {q(key)},
     'crm_tags'       => ['izmir-etkinlik', 'aralik-2026'],
     'event_name'     => 'İzmir Özel Yatırım Etkinliği · 4–5 Aralık 2026',
+    'openai_pixel_id' => {q(pixel)},
+    'openai_capi_key' => {q(capi)},
 ];
 """
 with open(out, "w", encoding="utf-8") as f:
     f.write(php)
-print("ayarlar.php üretildi:", "mail=" + ("var" if mail else "yok"), "crm=" + ("var" if key else "yok"))
+print("ayarlar.php üretildi:", "mail=" + ("var" if mail else "yok"), "crm=" + ("var" if key else "yok"), "openai_capi=" + ("var" if capi else "yok"))

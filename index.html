@@ -583,7 +583,8 @@ $("#lead").addEventListener("submit",async e=>{
   ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","gclid"].forEach(k=>{if(q.get(k))utm[k]=q.get(k);});
   const data={name:name.value.trim(),cc:$("#cc").value,phone:phone.value.trim(),email:$("#email").value.trim(),
     program:v("program"),day:v("day"),kvkk:c1.checked,ticari:$("#c2").checked,website:$("#hp").value,
-    t:Math.round((Date.now()-T0)/1000),page:location.href.split("#")[0],ref:document.referrer||"",utm};
+    t:Math.round((Date.now()-T0)/1000),page:location.href.split("#")[0],ref:document.referrer||"",utm,
+    event_id:"apt-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10)};
   btn.disabled=true;const old=btn.innerHTML;btn.innerHTML="Gönderiliyor…";
   try{
     const r=await fetch("lead.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
@@ -597,7 +598,8 @@ $("#lead").addEventListener("submit",async e=>{
     form.classList.add("done");$("#p-body").classList.add("done");
     setTimeout(()=>{try{$("#ok").focus({preventScroll:true});}catch(_){}} ,50);
     if(window.fbq){try{fbq("track","Lead",{content_name:data.program});}catch(_){}}
-    if(window.oaiq){try{oaiq("measure","lead_created",{type:"customer_action"},{event_id:"lead-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)});}catch(_){}}
+    /* OpenAI Ads: sunucu (Conversions API) aynı event_id ile gönderir → çift sayılmaz */
+    if(window.oaiq){try{oaiq("measure","appointment_scheduled",{type:"customer_action"},{event_id:data.event_id});}catch(_){}}
     if(!matchMedia("(min-width:1061px)").matches) document.getElementById("kayit").scrollIntoView({behavior:"smooth",block:"start"});
   }catch(ex){
     err.textContent=(ex&&ex.message&&ex.message!=="Failed to fetch"?ex.message+" ":"")+"Lütfen tekrar deneyin.";

@@ -145,5 +145,45 @@ if ($key !== '' && !empty($cfg['crm_url']) && function_exists('curl_init')) {
     if (!$crm) logx($logf, "CRM hatası ($code) " . ($cerr ?: mb_substr((string)$res, 0, 300)));
 }
 
+// 4) OpenAI Ads Conversions API (sunucu tarafı; pikselle aynı event_id → tekilleştirme)
+$capiKey = trim((string)($cfg['openai_capi_key'] ?? ''));
+$pixelId = trim((string)($cfg['openai_pixel_id'] ?? ''));
+if ($capiKey !== '' && $pixelId !== '' && function_exists('curl_init')) {
+    $evId = preg_replace('/[^A-Za-z0-9_.:-]/', '', $s($in['event_id'] ?? '', 80)) ?: ('apt-' . bin2hex(random_bytes(8)));
+    $user = ['ip_address' => $ip];
+    $ua = $s($_SERVER['HTTP_USER_AGENT'] ?? '', 500);
+    if ($ua !== '') $user['user_agent'] = $ua;
+    $pd = ltrim(preg_replace('/\D/', '', $phone) ?? '', '0');                 // +905321234567 → 905321234567
+    if (strlen($pd) >= 8 && strlen($pd) <= 15) $user['phone_numbers_sha256'] = [hash('sha256', $pd)];
+    if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) $user['emails_sha256'] = [hash('sha256', mb_strtolower(trim($email)))];
+    $obref = $s($_COOKIE['__obref'] ?? '', 1000);
+    if ($obref !== '') $user['obref'] = $obref;
+    $oppref = $s($_COOKIE['__oppref'] ?? '', 1000);
+    if ($oppref === '') { parse_str((string)parse_url($page, PHP_URL_QUERY), $qs); $oppref = $s($qs['oppref'] ?? '', 1000); }
+    $ev = [
+        'id'            => $evId,
+        'type'          => 'appointment_scheduled',
+        'timestamp_ms'  => (int)round(microtime(true) * 1000),
+        'source_url'    => $page !== '' ? $page : 'https://event.goldenpartner.com.tr/',
+        'action_source' => 'web',
+        'data'          => ['type' => 'customer_action'],
+        'user'          => $user,
+    ];
+    if ($oppref !== '') $ev['oppref'] = $oppref;
+    $url = (string)($cfg['openai_capi_url'] ?? 'https://bzr.openai.com/v1/events') . '?pid=' . rawurlencode($pixelId);
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Authorization: Bearer ' . $capiKey],
+        CURLOPT_POSTFIELDS => json_encode(['validate_only' => false, 'events' => [$ev]], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+        CURLOPT_RETURNTRANSFER => true, CURLOPT_CONNECTTIMEOUT => 3, CURLOPT_TIMEOUT => 6,
+    ]);
+    $res  = curl_exec($ch);
+    $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $cerr = curl_error($ch);
+    curl_close($ch);
+    if ($code < 200 || $code >= 300) logx($logf, "OpenAI CAPI hatası ($code) " . ($cerr ?: mb_substr((string)$res, 0, 300)));
+}
+
 if (!$saved && !$mailed && !$crm) out(500, ['ok' => false, 'error' => 'Talebiniz kaydedilemedi.']);
 out(200, ['ok' => true]);
