@@ -67,3 +67,17 @@ jobs:
           php_ok=$(command -v php >/dev/null && php -l "$TMP/ayarlar.php" >/dev/null && echo ok || echo skip); echo "php -l: $php_ok"
           lftp -c "set ftp:ssl-allow yes; set ftp:ssl-protect-data yes; set ssl:verify-certificate no; set net:max-retries 3; set net:timeout 30; open -u '$FTP_USERNAME' --env-password '$FTP_SERVER'; put '$TMP/ayarlar.php' -o ayarlar.php"
           rm -rf "$TMP"
+
+      - name: OpenAI Conversions API anahtar kontrolü (validate_only, gerçek dönüşüm göndermez)
+        env:
+          OPENAI_CAPI_KEY: ${{ secrets.OPENAI_CAPI_KEY }}
+          OPENAI_PIXEL_ID: ${{ vars.OPENAI_PIXEL_ID }}
+        run: |
+          if [ -z "$OPENAI_CAPI_KEY" ]; then echo "OPENAI_CAPI_KEY yok — atlandı."; exit 0; fi
+          PID="${OPENAI_PIXEL_ID:-FTNLk8Leg1eBJJ8m68Pnoh}"
+          TS=$(($(date +%s)*1000))
+          BODY=$(printf '{"validate_only":true,"events":[{"id":"deploy-check-%s","type":"appointment_scheduled","timestamp_ms":%s,"source_url":"https://event.goldenpartner.com.tr/","action_source":"web","data":{"type":"customer_action"}}]}' "$GITHUB_RUN_ID" "$TS")
+          CODE=$(curl -sS -o /tmp/capi.json -w '%{http_code}' -X POST "https://bzr.openai.com/v1/events?pid=$PID" \
+            -H "Authorization: Bearer $OPENAI_CAPI_KEY" -H "Content-Type: application/json" --data "$BODY")
+          echo "HTTP $CODE"; head -c 500 /tmp/capi.json; echo
+          if [ "$CODE" -lt 200 ] || [ "$CODE" -ge 300 ]; then echo "::error::OpenAI Conversions API anahtarı/piksel kimliği doğrulanamadı (HTTP $CODE)"; exit 1; fi
